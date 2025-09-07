@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: starwars_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: swuser
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: starwars_api
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    command: uvicorn app.main:app --reload
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg2://swuser:secretpassword@db:5432/starwars_api
+    volumes:
+      - .:/app  # essential so any files created in /app inside the container will appear in vote-wars.
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 from alembic import context
 
 from database import Base
-from models import *
 
 target_metadata = Base.metadata
 load_dotenv()

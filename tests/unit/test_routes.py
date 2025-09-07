@@ -1,4 +1,3 @@
-import datetime
 import json
 import random
 import uuid
@@ -92,7 +91,7 @@ class TestCharactersResource:
             "swapi_id": random.randint(1000, 9999)
 
         }
-        monkeypatch.setattr('api.swapi.create_character', Mock(side_effect=ValueError("Character already exists")))
+        monkeypatch.setattr('api.routes.create_character', Mock(side_effect=ValueError("Character already exists")))
         response = client.post(
             "/api/v1/vote_wars/characters",
             data=json.dumps(payload),
@@ -112,7 +111,7 @@ class TestCharactersResource:
             "swapi_id": random.randint(1000, 9999)
 
         }
-        monkeypatch.setattr('api.swapi.create_character', Mock(side_effect=OperationalError))
+        monkeypatch.setattr('api.routes.create_character', Mock(side_effect=OperationalError))
         response = client.post(
             "/api/v1/vote_wars/characters",
             data=json.dumps(payload),
@@ -190,7 +189,7 @@ class TestFilmsResource:
             "swapi_id": random.randint(1000, 9999)
 
         }
-        monkeypatch.setattr('api.swapi.create_film', Mock(side_effect=ValueError("Film already exists")))
+        monkeypatch.setattr('api.routes.create_film', Mock(side_effect=ValueError("Film already exists")))
         response = client.post(
             "/api/v1/vote_wars/characters",
             data=json.dumps(payload),
@@ -204,7 +203,7 @@ class TestFilmsResource:
             "swapi_id": random.randint(1000, 9999)
 
         }
-        monkeypatch.setattr('api.swapi.create_film', Mock(side_effect=OperationalError))
+        monkeypatch.setattr('api.routes.create_film', Mock(side_effect=OperationalError))
         response = client.post(
             "/api/v1/vote_wars/films",
             data=json.dumps(payload),
@@ -282,7 +281,7 @@ class TestStarshipsResource:
             "swapi_id": random.randint(1000, 9999)
 
         }
-        monkeypatch.setattr('api.swapi.create_starship', Mock(side_effect=ValueError("Starship already exists")))
+        monkeypatch.setattr('api.routes.create_starship', Mock(side_effect=ValueError("Starship already exists")))
         response = client.post(
             "/api/v1/vote_wars/starships",
             data=json.dumps(payload),
@@ -296,7 +295,7 @@ class TestStarshipsResource:
             "swapi_id": random.randint(1000, 9999)
 
         }
-        monkeypatch.setattr('api.swapi.create_starship', Mock(side_effect=OperationalError))
+        monkeypatch.setattr('api.routes.create_starship', Mock(side_effect=OperationalError))
         response = client.post(
             "/api/v1/vote_wars/starships",
             data=json.dumps(payload),

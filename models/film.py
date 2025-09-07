@@ -1,30 +1,24 @@
-from sqlalchemy import Column, Integer, String, Table
+from sqlalchemy import Column, Integer, String, UUID, DateTime, Text
 from sqlalchemy.orm import relationship
 from database import Base
+from models.associations import film_starship
+from models.character import character_film
 
-character_film_association = Table(
-    "character_film",
-    Base.metadata,
-    Column("character_id", Integer, primary_key=True),
-    Column("film_id", Integer, primary_key=True)
-)
 
-starship_film_association = Table(
-    "starship_film",
-    Base.metadata,
-    Column("starship_id", Integer, primary_key=True),
-    Column("film_id", Integer, primary_key=True)
-)
 
 class Film(Base):
-    __tablename__ = "film"
-
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, unique=True, index=True)
+    __tablename__ = "films"
+    id = Column(UUID, primary_key=True, index=True)
+    title = Column(String, unique=True, index=True, nullable=False)
+    episode_id = Column(Integer, nullable=True)
     director = Column(String, nullable=True)
     producer = Column(String, nullable=True)
-    release_date = Column(String, nullable=True)
+    opening_crawl = Column(Text, nullable=True)
+    swapi_id = Column(Integer, index=True, unique=True,nullable=False)
+    release_date = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, nullable=True)
+    modified_at = Column(DateTime, nullable=True)
+    vote_count = Column(Integer, default=0)
 
-    # Relationships with characters and starships
-    characters = relationship("Character", secondary=character_film_association, back_populates="films")
-    starships = relationship("Starship", secondary=starship_film_association, back_populates="films")
+    characters = relationship("Character", secondary=character_film, back_populates="films")
+    starships = relationship("Starship", secondary=film_starship, back_populates="films")
