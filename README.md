@@ -77,9 +77,9 @@ poetry run python main.py
 - GET /api/search/starships?q=falcon
 
 ### Add Data
-- POST /api/fetch/people
-- POST /api/fetch/films
-- POST /api/fetch/starships
+- POST /api/characters
+- POST /api/films
+- POST /api/starships
 
 ## Swagger 
 Available at
